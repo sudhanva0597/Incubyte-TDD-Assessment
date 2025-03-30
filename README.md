@@ -11,3 +11,4 @@
     - Input: a string of comma-separated numbers
     - Output: an integer, sum of the numbers
 
+3. Allow the add method to handle any amount of numbers.
