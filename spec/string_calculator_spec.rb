@@ -199,5 +199,37 @@ RSpec.describe StringCalculator do
     it 'returns sum for multiple numbers with mixed tests with custom delimiter and newline' do
       expect(calculator.add("//;\n10\n,20   \n\n\n;;;00020;;;40.323211;")).to eq(90)
     end
+
+    it 'returns sum for multiple numbers with mixed tests with custom delimiter and newline and a comma inbetween the number' do
+      expect(calculator.add("//;\n10\n,2,0  ,,, \n\n\n;;;,,00,,,02,0;;;40.323211;")).to eq(90)
+    end
+
+    it 'throws an error for negetive numbers' do
+      expect { calculator.add("-2,4") }.to raise_error(RuntimeError, "Negative numbers are not allowed: -2")
+    end
+
+    it 'throws an error for multiple negetive numbers' do
+      expect { calculator.add("-2,    -4") }.to raise_error(RuntimeError, "Negative numbers are not allowed: -2, -4")
+    end
+
+    it 'throws an error for trying to use - as a custom delimiter' do
+      expect { calculator.add("//-\n2\n4") }.to raise_error(RuntimeError, "Invalid delimiter: -")
+    end
+
+    it 'throws an error for trying to use . as a custom delimiter' do
+      expect { calculator.add("//.\n2\n4") }.to raise_error(RuntimeError, "Invalid delimiter: .")
+    end
+
+    it 'defaults to comma and newspace if the custom delimiter is not properly initialized' do
+      expect(calculator.add("///;\n2\n4;2")).to eq(44)
+    end
+
+    it 'returns sum for two numbers while ignoring numbers larger than 1000' do
+      expect(calculator.add("  2\n  4,1001")).to eq(6)
+    end
+
+    it 'returns sum for two numbers while ignoring numbers larger than 1000' do
+      expect(calculator.add("  2\n  4,1000")).to eq(1006)
+    end
   end
 end

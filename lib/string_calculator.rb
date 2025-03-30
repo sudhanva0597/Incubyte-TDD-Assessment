@@ -7,14 +7,13 @@ class StringCalculator
   def add(input)
     delimiter = ","
     if input[0] == "/" && input[1] == "/" && input[3] == "\n"
-      if input[2] == "\n" || input[2] == "."
-        delimiter = "\n"
-      else
-        delimiter = input[2]
+      if input[2] == "-" || input[2] == "."
+        raise "Invalid delimiter: #{input[2]}"
       end
+      delimiter = input[2]
     end
     # Remove non-numeric and non-separator characters
-    sanitized_input = input.gsub(/[^0-9#{Regexp.escape(delimiter)}.\n]/, '')
+    sanitized_input = input.gsub(/[^0-9#{Regexp.escape(delimiter)}.\-\n]/, '')
     if(sanitized_input.empty?)
       return 0
     end
@@ -23,8 +22,17 @@ class StringCalculator
     # Then, sum the integers and return the result.
     numbers = sanitized_input.split(/#{Regexp.escape(delimiter)}|\n/).map(&:to_i)
 
+    # Check for negative numbers and raise an exception if any are found.
+    negatives = numbers.select { |number| number < 0 }
+    if negatives.any?
+      raise "Negative numbers are not allowed: #{negatives.join(', ')}"
+    end
+    
     sum = 0
     numbers.each do |number|
+      if number > 1000
+        next
+      end
       sum += number
     end
     return sum
