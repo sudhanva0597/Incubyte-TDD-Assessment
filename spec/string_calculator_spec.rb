@@ -152,5 +152,52 @@ RSpec.describe StringCalculator do
       expect(calculator.add("10\n,20   \n\n\n00020\n,,40.323211")).to eq(90)
     end
 
+    it 'returns sum for two numbers with custom delimiter' do
+      expect(calculator.add("//;\n2;4")).to eq(6)
+    end
+
+    it 'returns integer sum for two decimal numbers with custom delimiter' do
+      expect(calculator.add("//)\n2.5)2.5")).to eq(4)
+    end
+
+    it 'returns integer sum for an integer and a decimal number with custom delimiter' do
+      expect(calculator.add("//$\n2$0.5323")).to eq(2)
+    end
+
+    it 'returns sum for two numbers with leading zeros with custom delimiter' do
+      expect(calculator.add("//$\n00010$$$$00100")).to eq(110)
+    end
+
+    it 'returns sum for two numbers with leading space with custom delimiter' do
+      expect(calculator.add("//$\n  2$  4")).to eq(6)
+    end
+
+    it 'returns sum for two numbers with trailing space with custom delimiter' do
+      expect(calculator.add("//;\n10   ;200  ")).to eq(210)
+    end
+
+    it 'returns sum for two numbers with leading and trailing spaces with custom delimiter' do
+      expect(calculator.add("//;\n  20   ;   20  ")).to eq(40)
+    end
+
+    it 'returns sum for multiple numbers with custom delimiter' do
+      expect(calculator.add("//;\n10;20;20;40;20")).to eq(110)
+    end
+
+    it 'returns sum for empty numbers with custom delimiter' do
+      expect(calculator.add("//;\n10;;;;")).to eq(10)
+    end
+
+    it 'returns sum for multiple empty numbers with custom delimiter' do
+      expect(calculator.add("//;\n10;; ;; 40;;;")).to eq(50)
+    end
+
+    it 'returns sum for multiple numbers with mixed tests with custom delimiter and newline' do
+      expect(calculator.add("//;\n   10; 20   \n00020;40.323211  ;;;;  0.0020; 000.221")).to eq(90)
+    end
+
+    it 'returns sum for multiple numbers with mixed tests with custom delimiter and newline' do
+      expect(calculator.add("//;\n10\n,20   \n\n\n;;;00020;;;40.323211;")).to eq(90)
+    end
   end
 end
