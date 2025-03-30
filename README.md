@@ -1,6 +1,13 @@
 ## Incubyte-TDD-Assessment
 ##### Incubyte TDD Assessment submission from Sudhanva Nargund
 ---
+
+#### Steps to run tests
+
+`bundle install`
+`rspec`
+
+---
 #### String Calculator TDD Kata
 
 1. Setting up the environment with Rspec for TDD.
