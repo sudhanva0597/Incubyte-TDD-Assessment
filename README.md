@@ -5,6 +5,7 @@
 #### Steps to run tests
 
 `bundle install`
+
 `rspec`
 
 ---
