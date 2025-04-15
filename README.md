@@ -30,3 +30,5 @@
     - If there are multiple negative numbers, show all of them in the exception message, separated by commas.
 
 7. Numbers bigger than 1000 should be ignored, so adding 2 + 1001 = 2
+
+8. If we get * as the custom delimiter, then instead of sum return the product of the numbers.

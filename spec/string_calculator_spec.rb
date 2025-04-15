@@ -33,7 +33,7 @@ RSpec.describe StringCalculator do
     end
     
     it 'returns number for a single large number' do
-      expect(calculator.add("1234")).to eq(1234)
+      expect(calculator.add("234")).to eq(234)
     end
     
     it 'returns number for a single number with leading zeros' do
@@ -230,6 +230,38 @@ RSpec.describe StringCalculator do
 
     it 'returns sum for two numbers while ignoring numbers larger than 1000' do
       expect(calculator.add("  2\n  4,1000")).to eq(1006)
+    end
+    
+    it 'returns product for two numbers if the custom delimiter is a *' do
+      expect(calculator.add("//*\n2*4")).to eq(8)
+    end
+
+    it 'returns integer product for two decimal numbers' do
+      expect(calculator.add("//*\n2.5*2.5")).to eq(4)
+    end
+
+    it 'returns integer product for an integer and a decimal number' do
+      expect(calculator.add("//*\n2*0.5323")).to eq(0)
+    end
+
+    it 'returns product for two numbers with leading zeros' do
+      expect(calculator.add("//*\n00010*00100")).to eq(1000)
+    end
+
+    it 'returns product for two numbers with leading space' do
+      expect(calculator.add("//*\n  2*  4")).to eq(8)
+    end
+
+    it 'returns product for any numbers if the custom delimiter is a *' do
+      expect(calculator.add("//*\n2*4*2")).to eq(16)
+    end
+
+    it 'returns product for any numbers if the custom delimiter is a * and split by newline' do
+      expect(calculator.add("//*\n2\n4\n2")).to eq(16)
+    end
+
+    it 'returns product for any numbers if the custom delimiter is a * and ignores numbers greater than a 1000' do
+      expect(calculator.add("//*\n2\n4\n1001")).to eq(8)
     end
   end
 end
